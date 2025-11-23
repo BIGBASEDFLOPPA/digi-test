@@ -126,8 +126,10 @@ defineProps({ product: Object })
   &__footer {
     display: flex;
     gap: 8px;
-    margin-top: auto;
     margin: 0;
+    @media(max-width: 400px){
+      margin: auto;
+    }
   }
 }
 </style>
