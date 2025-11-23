@@ -1,0 +1,25 @@
+$font-pt-sans: 'PT Sans', sans-serif;
+$font-inter: 'Inter', sans-serif;
+
+$fw-400: 400;
+$fw-500: 500;
+$fw-700: 700;
+
+$fs-sm: 12px;
+$fs-md: 14px;
+$fs-lg: 16px;
+$fs-xl: 18px;
+$fs-xxl:22px;
+
+@mixin font-pt($weight: $fw-400, $size: $fs-md, ) {
+  font-family: $font-pt-sans;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+@mixin font-inter($weight: $fw-400, $size: $fs-md, ) {
+  font-family: $font-inter;
+  font-weight: $weight;
+  font-size: $size;
+
+}
