@@ -73,6 +73,11 @@ defineProps({ product: Object })
 
   &__title {
     font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__price {
