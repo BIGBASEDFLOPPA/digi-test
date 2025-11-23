@@ -1,83 +1,63 @@
 <template>
   <div class="filter-card">
-    <ul class="filter-list">
-      <li
-          v-for="cat in categories"
-          :key="cat.id"
-          class="filter-item"
-      >
-        <div
-            class="category-label"
-            :class="{ active: openCategories.includes(cat.id) }"
-            @click="toggleCategory(cat.id)"
-        >
-          <img
-              v-if="openCategories.includes(cat.id)"
-              src="@/assets/icons/iconArrowLeft.svg"
-              alt="arrow"
-              class="category-arrow"
-          />
-          <span>{{ cat.label }}</span>
-          <span class="category-count">3</span>
-        </div>
+    <div class="category-label " @click="toggleMain">
+      <span>{{ mainCategoryLabel }}</span>
+      <span class="category-count">{{ products.length }}</span>
+    </div>
 
-        <transition name="slide-fade">
-          <ul
-              v-if="openCategories.includes(cat.id)"
-              class="subcategory-list"
-          >
-            <li
-                v-for="sub in cat.subcategories"
-                :key="sub.id"
-                class="subcategory-item"
-                :class="{ selected: selectedSub === sub.id }"
-                @click.stop="toggleSubcategory(sub.id)"
-            >
-              <span>{{ sub.label }}</span>
-              <span class="subcategory-count">3</span>
-            </li>
-          </ul>
-        </transition>
-      </li>
-    </ul>
+    <transition name="slide-fade">
+      <ul v-if="openMain" class="subcategory-list">
+        <li
+            v-for="cat in subcategories"
+            :key="cat"
+            class="subcategory-item"
+            :class="{ selected: selectedCategory === cat }"
+            @click.stop="selectCategory(cat)"
+        >
+          <span>{{ cat }}</span>
+          <span class="subcategory-count">{{ getCategoryCount(cat) }}</span>
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-const categories = [
-  {
-    id: 1,
-    label: 'Название категории 1',
-    subcategories: [
-      { id: 11, label: 'Подкатегория 1-1' },
-      { id: 12, label: 'Подкатегория 1-2' },
-      { id: 13, label: 'Подкатегория 1-3' },
-      { id: 14, label: 'Подкатегория 1-4' }
-    ]
-  }
-]
+const props = defineProps({
+  products: Array,
+  selectedCategory: String
+})
 
-const openCategories = ref([1])
-const selectedSub = ref(null)
+const emit = defineEmits(['update:selectedCategory'])
 
-function toggleCategory(id) {
-  if (openCategories.value.includes(id)) {
-    openCategories.value = openCategories.value.filter(c => c !== id)
-  } else {
-    openCategories.value.push(id)
-  }
+const mainCategoryLabel = 'Все товары'
+const openMain = ref(true)
+
+const subcategories = computed(() => {
+  const cats = props.products.map(p => p.category)
+  return Array.from(new Set(cats))
+})
+
+function getCategoryCount(cat) {
+  return props.products.filter(p => p.category === cat).length
 }
 
-function toggleSubcategory(id) {
-  if (selectedSub.value === id) {
-    selectedSub.value = null
+
+function toggleMain() {
+  openMain.value = !openMain.value
+}
+
+function selectCategory(cat) {
+  if (props.selectedCategory === cat) {
+    emit('update:selectedCategory', '')
   } else {
-    selectedSub.value = id
+    emit('update:selectedCategory', cat)
   }
 }
 </script>
+
 
 <style scoped>
 .filter-card {
@@ -125,6 +105,7 @@ function toggleSubcategory(id) {
 }
 
 .subcategory-list {
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;

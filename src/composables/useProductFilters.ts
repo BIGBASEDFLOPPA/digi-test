@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-export function useProductFilters(products, searchRef, sizesRef, brandsRef, priceRangeRef) {
+export function useProductFilters(products, searchRef, sizesRef, brandsRef, priceRangeRef, categoryRef) {
     const filteredProducts = computed(() => {
         const min = Number(priceRangeRef.value[0]) || 0
         const max = Number(priceRangeRef.value[1]) || Infinity
@@ -11,6 +11,7 @@ export function useProductFilters(products, searchRef, sizesRef, brandsRef, pric
             if (brandsRef.value.length && !brandsRef.value.includes(p.brand)) return false
             if (min && p.price < min) return false
             if (max && p.price > max) return false
+            if (categoryRef.value && p.category !== categoryRef.value) return false
             return true
         })
     })

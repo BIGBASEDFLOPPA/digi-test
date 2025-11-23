@@ -11,6 +11,7 @@
           v-model:selectedSizes="selectedSizes"
           v-model:selectedBrands="selectedBrands"
           v-model:priceRange="selectedPriceRange"
+          v-model:selectedCategory="selectedCategory"
       />
       <ProductsList
           :products="filteredProducts"
@@ -32,6 +33,7 @@ const search = ref('')
 const selectedSizes = ref([])
 const selectedBrands = ref([])
 const selectedPriceRange = ref([0, 0])
+const selectedCategory = ref('')
 
 const products = ref([])
 const loading = ref(true)
@@ -60,7 +62,8 @@ const { filteredProducts } = useProductFilters(
     search,
     selectedSizes,
     selectedBrands,
-    selectedPriceRange
+    selectedPriceRange,
+    selectedCategory
 )
 
 function handleBack() {
