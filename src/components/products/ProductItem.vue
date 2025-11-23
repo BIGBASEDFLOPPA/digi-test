@@ -17,7 +17,7 @@
           class="badge badge-discount"
       />
 
-      <div class="card__img"></div>
+      <img :src="product.img" alt="product" class="card__img" />
     </div>
 
     <div class="card__body">
@@ -53,11 +53,19 @@ defineProps({ product: Object })
 
   &__img-wrapper {
     position: relative;
+    border-radius: 8px;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__img {
-    height: 200px;
-    background: #f1f5f9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 8px;
   }
 
