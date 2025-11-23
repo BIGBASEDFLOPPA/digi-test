@@ -127,6 +127,7 @@ defineProps({ product: Object })
     display: flex;
     gap: 8px;
     margin-top: auto;
+    margin: 0;
   }
 }
 </style>

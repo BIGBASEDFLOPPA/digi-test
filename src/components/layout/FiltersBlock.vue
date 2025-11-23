@@ -1,17 +1,24 @@
 <template>
   <aside class="filters">
-    <FiltersCategory :products="products" />
+    <FiltersCategory
+        :products="products"
+        :selectedCategory="selectedCategory"
+        @update:selectedCategory="$emit('update:selectedCategory', $event)"
+    />
     <FiltersPrice
         :products="products"
-        v-model:priceRange="selectedPriceRange"
+        :priceRange="priceRange"
+        @update:priceRange="$emit('update:priceRange', $event)"
     />
     <FiltersBrand
         :products="products"
-        v-model:selectedBrands="selectedBrands"
+        :selectedBrands="selectedBrands"
+        @update:selectedBrands="$emit('update:selectedBrands', $event)"
     />
     <FiltersSize
         :products="products"
-        v-model:selectedSizes="selectedSizes"
+        :selectedSizes="selectedSizes"
+        @update:selectedSizes="$emit('update:selectedSizes', $event)"
     />
   </aside>
 </template>
@@ -21,25 +28,21 @@ import FiltersBrand from "@/components/filters/FiltersBrand.vue";
 import FiltersPrice from "@/components/filters/FiltersPrice.vue";
 import FiltersCategory from "@/components/filters/FiltersCategory.vue";
 import FiltersSize from "@/components/filters/FiltersSize.vue";
-import {ref, watch} from "vue";
 
 const props = defineProps({
-  products: Array
+  products: Array,
+  selectedSizes: Array,
+  selectedBrands: Array,
+  priceRange: Array,
+  selectedCategory: String
 })
 
 const emit = defineEmits([
   'update:selectedSizes',
   'update:selectedBrands',
-  'update:priceRange'
+  'update:priceRange',
+  'update:selectedCategory'
 ])
-
-const selectedSizes = ref([])
-const selectedBrands = ref([])
-const selectedPriceRange = ref([0, 0])
-
-watch(selectedSizes, val => emit('update:selectedSizes', val))
-watch(selectedBrands, val => emit('update:selectedBrands', val))
-watch(selectedPriceRange, val => emit('update:priceRange', val))
 </script>
 
 <style lang="scss" scoped>

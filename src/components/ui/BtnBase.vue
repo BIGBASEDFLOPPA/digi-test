@@ -24,6 +24,7 @@ defineProps({
 
 <style scoped lang="scss">
 .btn {
+
   padding: 12px 16px;
   border-radius: 4px;
   cursor: pointer;
@@ -40,6 +41,7 @@ defineProps({
 
 .btn.gray {
   @include font-pt($fw-700, $fs-md);
+  margin-top: 52px;
   width: 100%;
   color:#AAAAAA;
   border:#AAAAAA 1px solid;

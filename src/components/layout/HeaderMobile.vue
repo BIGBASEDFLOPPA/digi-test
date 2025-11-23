@@ -8,7 +8,7 @@
       <input
           v-model="search"
           type="text"
-          placeholder="Поиск товаров..."
+          placeholder="Запрос"
           @focus="isFocused = true"
           @blur="isFocused = false"
           @keyup.enter="handleSearch"
